@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:1": "node 1.http.js",
-    "dev:2": "node 2.routing.js"
-
+    "dev:2": "node 2.routing.js",
+    "dev:3": "node --watch 3.express.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,8 @@
   "homepage": "https://github.com/sarannz0/Curso_Node_C#readme",
   "devDependencies": {
     "standard": "^17.1.2"
+  },
+  "dependencies": {
+    "express": "5.2.1"
   }
 }

@@ -37,7 +37,7 @@ const processRequest = (req, res) => {
                         data.timestamp = Date.now()
                         res.end(JSON.stringify(data))
                     })
-                  
+                  break
                 }
                 default:
                     res.statusCode = 404
