@@ -1,15 +1,24 @@
 {
-  "name": "curso_node",
+  "name": "curso_node_c",
   "version": "1.0.0",
-  "main": "1.os-info.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarannz0/Curso_Node_C.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "picocolors": "^1.1.1"
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sarannz0/Curso_Node_C/issues"
+  },
+  "homepage": "https://github.com/sarannz0/Curso_Node_C#readme",
+  "devDependencies": {
+    "standard": "^17.1.2"
   }
 }
