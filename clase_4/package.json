@@ -2,16 +2,17 @@
   "name": "clase_3",
   "version": "1.0.0",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:1": "node app.js",
-    "dev:2": "node movies.js"
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cors": "2.8.6",
     "express": "5.2.1",
     "zod": "4.3.6"
   }

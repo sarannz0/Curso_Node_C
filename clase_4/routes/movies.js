@@ -1,40 +1,12 @@
-const express = require('express') // require -> commonJs 
-const crypto = require('crypto') // modulo nativo de node para generar ids unicos   
-const cors = require('cors')
-const movies = require('./movies.json')
+import { randomUUID } from 'node:crypto'   // modulo nativo de node para generar ids unicos   
+import { Router } from 'express'
+import { readJSON } from './utils.js'
 
 
-const { validateMovie, validatePartialMovie } = require('./schemas/movies') // importamos la funcion de validacion del esquema de peliculas
-const { callbackify } = require('util')
+const movies =readJSON('./movies.json')
+export const moviesRouter = Router()
 
-const app = express()
-app.use(express.json()) // middleware para parsear el body de las peticiones como JSON  
-app.use(cors({
-    origin: (origin, callback) => {
-        const ACCEPTED_ORIGINS = [
-            'http://localhost:1234',
-            'https://movies.com',
-            'https://midu.dev'
-        ]
-
-        if (ACCEPTED_ORIGINS.includes(origin)) {
-            return callback(null, true)
-        }
-
-        if (!origin) {
-            return callback(null, true)
-        }
-
-        return callback(new Error('Not allowed by CORS'))
-    }
-
-}))
-// middleware para habilitar CORS en todas las rutas
-app.disable('x-powered-by') // deshabilitar el header x-powered-by
-
-
-// Todos loos recursos que sean movies se identifica con /movies
-app.get('/movies', (req, res) => {
+moviesRouter.get('/', (req, res) => {
     const { genre } = req.query
     if (genre) {
         const fiteredMovies = movies.filter(
@@ -45,16 +17,15 @@ app.get('/movies', (req, res) => {
     res.json(movies)
 })
 
-app.get('/movies/:id', (req, res) => { // path-to-regexp
-    const { id } = req.params
+moviesRouter.get('/:id', (req, res) => {
+     const { id } = req.params
     const movie = movies.find(movie => movie.id === id)
     if (movie) return res.json(movie)
 
     res.status(404).json({ message: 'movie not found' })
 })
 
-
-app.post('/movies', (req, res) => {
+moviesRouter.post('/', (req, res) => {
 
     const result = validateMovie(req.body)
 
@@ -63,18 +34,17 @@ app.post('/movies', (req, res) => {
         return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
 
-
     // EN BASE DE DATOS
     const newMovie = {
-        id: crypto.randomUUID(),
+        id: randomUUID(),
         ...result.data
-
     }
+
     movies.push(newMovie)
     res.status(201).json(newMovie) // actualizar la cache del cliente
 })
 
-app.delete ('/movies/:id', (req, res) => {
+moviesRouter.delete ('/:id', (req, res) => {
     const { id } = req.params
     const movieIndex = movies.findIndex(movie => movie.id === id)    
     
@@ -87,7 +57,7 @@ app.delete ('/movies/:id', (req, res) => {
     return res.json({ message: "movie deleted" })
 })
 
-app.patch('/movies/:id', (req, res) => {
+moviesRouter.patch('/:id', (req, res) => {
     const result = validatePartialMovie(req.body)
 
     if (!result.success) {
@@ -110,11 +80,3 @@ app.patch('/movies/:id', (req, res) => {
 
         return res.json(updateMovie)
     })
-
-    const PORT = process.env.PORT ?? 1234
-
-
-    app.listen(PORT, () => {
-        console.log(`server listening on port http://localhost:${PORT}`)
-    })
-
