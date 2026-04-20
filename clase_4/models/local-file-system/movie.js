@@ -27,6 +27,7 @@ export class MovieModel {
         return newMovie
     }
 
+
     static async deleteById(id) {
         const movieIndex = movies.findIndex(movie => movie.id === id)
         if (movieIndex === -1) return false

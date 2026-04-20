@@ -17,19 +17,6 @@ app.disable('x-powered-by') // deshabilitar el header x-powered-by
 
 app.use('/movies', moviesRouter)
 
-app.get('/movies/:id', todo)
-
-app.post('/movies', todo)
-
-app.post('/movies', todo)
-
-app.delete('/movies/:id', todo)
-
-
-app.patch('/movies/:id', todo)
-
-
-
 const PORT = process.env.PORT ?? 1234
 
 
